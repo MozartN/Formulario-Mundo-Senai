@@ -1,0 +1,79 @@
+import * as C from "@chakra-ui/react";
+import { useState } from "react";
+import Step from "./components/Steps";
+import FormEndereco from "./Pages/FormEndereco";
+import FormPessoal from "./Pages/FormPessoal";
+import FormProjeto from "./Pages/FormProjeto";
+
+function App() {
+    const [step, setStep] = useState(1);
+    const Steps = [1, 2, 3];
+
+    const getStep = () => {
+        switch (step) {
+            case 1:
+                return <FormPessoal />;
+            case 2:
+                return <FormEndereco />;
+            case 3:
+                return <FormProjeto />;
+            default:
+                return <FormPessoal />;
+        }
+    };
+        
+    return (
+     
+        <C.Flex h="100vh" align="center" justify="center" bg="gray.100">
+         
+            <C.Center
+                maxW={600}
+                w="100%"
+                py={8}
+                px={6}
+                flexDirection="column"
+                border="2px solid"
+                borderColor="teal.500"
+                borderRadius="md"
+                bg="white"
+                boxShadow="lg"
+            >
+               
+                <C.HStack spacing={4} mb={6}>
+                    {Steps.map((item) => (
+                        <Step key={item} index={item} active={step === item} />
+                    ))}
+                </C.HStack>
+
+                <C.Divider my={6} borderColor="gray.300" />
+
+                <C.Box w="100%" maxW="lg">
+                    {getStep()}
+                </C.Box>
+
+                <C.HStack mt={6} spacing={8}>
+                    <C.Button
+                        bg="gray.200"
+                        color="gray.800"
+                        _hover={{ bg: "gray.300" }}
+                        onClick={() => step !== 1 && setStep(step - 1)}
+                        isDisabled={step === 1}
+                    >
+                        Voltar
+                    </C.Button>
+                   
+                    <C.Button
+                        bg="teal.500"
+                        color="white"
+                        _hover={{ bg: "teal.600" }}
+                        onClick={() => step !== 3 && setStep(step + 1)}
+                    >
+                        {step === 3 ? "Enviar" : "Próximo"}
+                    </C.Button>
+                </C.HStack>
+            </C.Center>
+        </C.Flex>
+    );
+}
+
+export default App;
